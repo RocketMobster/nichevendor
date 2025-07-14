@@ -1,7 +1,24 @@
 "use client";
 
+/**
+ * @file Button.tsx
+ * @description A reusable, customizable button component with different variants and sizes.
+ * Used throughout the application for consistent styling of interactive elements.
+ */
+
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 
+/**
+ * Props interface for the Button component
+ * Extends standard HTML button attributes with custom styling options
+ * 
+ * @interface ButtonProps
+ * @extends {ButtonHTMLAttributes<HTMLButtonElement>}
+ * @property {ReactNode} children - Content to display inside the button
+ * @property {'primary' | 'secondary' | 'outline'} [variant='primary'] - Visual style variant
+ * @property {'sm' | 'md' | 'lg'} [size='md'] - Button size
+ * @property {boolean} [fullWidth=false] - Whether the button should take full width
+ */
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   variant?: 'primary' | 'secondary' | 'outline';
@@ -9,6 +26,11 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fullWidth?: boolean;
 }
 
+/**
+ * A customizable button component with different styling variants
+ * @param {ButtonProps} props - Button properties
+ * @returns {JSX.Element} - Rendered button
+ */
 const Button = ({
   children,
   variant = 'primary',

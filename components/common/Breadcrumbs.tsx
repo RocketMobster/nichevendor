@@ -1,8 +1,19 @@
 "use client";
 
+/**
+ * @file Breadcrumbs.tsx
+ * @description A navigation component that displays the current location path as a series
+ * of clickable links, providing contextual navigation for users.
+ */
+
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
+/**
+ * Generates a breadcrumb navigation trail based on the current URL path
+ * Automatically formats path segments into readable text
+ * @returns {JSX.Element|null} Breadcrumb navigation component or null for home page
+ */
 const Breadcrumbs = () => {
   const pathname = usePathname();
   
@@ -14,7 +25,11 @@ const Breadcrumbs = () => {
     .split('/')
     .filter(segment => segment !== '');
   
-  // Capitalize the segment name and replace dashes with spaces
+  /**
+   * Formats URL segments into readable text by capitalizing words and replacing dashes with spaces
+   * @param {string} segment - The URL path segment to format
+   * @returns {string} Formatted, human-readable text
+   */
   const formatSegmentName = (segment: string) => {
     return segment
       .split('-')

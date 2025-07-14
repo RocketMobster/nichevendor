@@ -1,13 +1,30 @@
 "use client";
 
+/**
+ * @file page.tsx
+ * @description Main dashboard/home page component for the NicheVendor CRM application.
+ * Shows an overview of upcoming events, alerts, recent sales, and provides
+ * quick navigation to main sections of the application.
+ */
+
 import Link from 'next/link';
 import DashboardCard from '../components/dashboard/DashboardCard';
 import Button from '../components/common/Button';
 import { formatCurrency } from '../utils/formatCurrency';
 import { formatDate } from '../utils/dateUtils';
 
+/**
+ * Home/Dashboard page component
+ * Serves as the entry point and overview screen for the application
+ * @returns {JSX.Element} The dashboard page
+ */
 export default function Home() {
-  // Mock data for initial display
+  /**
+   * Mock data for initial display
+   * In production, this would be fetched from context/API/database
+   */
+  
+  // Next upcoming event information
   const nextEvent = {
     name: 'BlipCon',
     location: 'Miami Expo Center',
@@ -15,11 +32,13 @@ export default function Home() {
     endDate: new Date('2025-07-20'),
   };
   
+  // Alerts requiring user attention
   const alerts = [
     { id: '1', message: '4 products low on stock' },
     { id: '2', message: '2 custom orders pending' },
   ];
   
+  // Recent sales summary
   const salesSnapshot = {
     total: 428,
     event: 'ArtFest',

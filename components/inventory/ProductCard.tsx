@@ -1,18 +1,37 @@
 "use client";
 
+/**
+ * @file ProductCard.tsx
+ * @description A card component that displays product information in the inventory.
+ * Shows product image, name, description, price, stock level, and action buttons.
+ */
+
 import React from 'react';
 import { Product } from '../../models/Product';
 import { formatCurrency } from '../../utils/formatCurrency';
 
+/**
+ * Props interface for the ProductCard component
+ * @interface ProductCardProps
+ * @property {Product} product - The product data to display
+ * @property {Function} [onEdit] - Optional callback for edit action
+ * @property {Function} [onDelete] - Optional callback for delete action
+ */
 interface ProductCardProps {
   product: Product;
   onEdit?: (productId: string) => void;
   onDelete?: (productId: string) => void;
 }
 
+/**
+ * A card component that displays product information with image, details, and actions
+ * @param {ProductCardProps} props - Component props 
+ * @returns {JSX.Element} Product card component
+ */
 const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => {
   const { id, name, description, price, stock, imageUrl, category } = product;
   
+  // Constants for business logic
   const lowStockThreshold = 10;
   const isLowStock = stock < lowStockThreshold;
 

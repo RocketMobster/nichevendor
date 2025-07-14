@@ -1,3 +1,9 @@
+/**
+ * @file layout.tsx
+ * @description Root layout component that wraps all pages in the application.
+ * Provides common UI elements and the AppData context to all pages.
+ */
+
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -14,6 +20,13 @@ export const metadata: Metadata = {
   description: 'A mobile-first app for artists, crafters, and small business vendors',
 };
 
+/**
+ * Root layout component that sets up the application structure
+ * Includes the AppDataProvider context, navigation, and common UI elements
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Page content to render within the layout
+ * @returns {JSX.Element} The complete application layout
+ */
 export default function RootLayout({
   children,
 }: {

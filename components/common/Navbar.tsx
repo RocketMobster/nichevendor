@@ -1,17 +1,40 @@
 "use client";
 
+/**
+ * @file Navbar.tsx
+ * @description Mobile-first navigation bar that appears at the bottom of the screen.
+ * Provides the main navigation points for the application with visual indicators for active routes.
+ */
+
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
+/**
+ * Interface representing a navigation item in the Navbar
+ * @interface NavItem
+ * @property {string} path - The route path for navigation
+ * @property {string} label - Text label to display for the navigation item
+ * @property {string} icon - Emoji or icon character to display for the navigation item
+ */
 interface NavItem {
   path: string;
   label: string;
   icon: string;
 }
 
+/**
+ * Bottom navigation bar component for mobile-first design.
+ * Handles route matching to highlight the active navigation item.
+ * @returns {JSX.Element} Navigation bar component
+ */
 const Navbar = () => {
+  // Get the current path to determine which nav item is active
   const pathname = usePathname();
   
+  /**
+   * Navigation items configuration
+   * Includes path, label, and icon for each main navigation point
+   */
   const navItems: NavItem[] = [
     { path: '/', label: 'Home', icon: '🏠' },
     { path: '/inventory', label: 'Inventory', icon: '📦' },
