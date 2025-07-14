@@ -4,14 +4,15 @@ import { useAppData } from '../../context/AppDataContext';
 import Button from '../../components/common/Button';
 import ProductCard from '../../components/inventory/ProductCard';
 import { Product } from '../../models/Product';
-import { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 
 export default function InventoryPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   
   // We would normally use the context here, but for demo purposes we'll use mock data
-  const mockProducts: Product[] = [
+  // Use useMemo to prevent recreation of mock products on every render
+  const mockProducts: Product[] = useMemo(() => [
     {
       id: '1',
       name: 'Ghost Pins',
@@ -20,8 +21,8 @@ export default function InventoryPage() {
       stock: 25,
       category: 'Pins',
       imageUrl: '/placeholder.jpg',
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date("2025-06-01"),
+      updatedAt: new Date("2025-06-01"),
     },
     {
       id: '2',
@@ -31,8 +32,8 @@ export default function InventoryPage() {
       stock: 10,
       category: 'Prints',
       imageUrl: '/placeholder.jpg',
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date("2025-06-02"),
+      updatedAt: new Date("2025-06-02"),
     },
     {
       id: '3',
@@ -42,10 +43,10 @@ export default function InventoryPage() {
       stock: 15,
       category: 'Stickers',
       imageUrl: '/placeholder.jpg',
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date("2025-06-03"),
+      updatedAt: new Date("2025-06-03"),
     },
-  ];
+  ], []);
   
   const categories = ['All', 'Pins', 'Prints', 'Stickers'];
   

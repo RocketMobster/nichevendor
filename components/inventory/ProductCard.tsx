@@ -1,5 +1,6 @@
 "use client";
 
+import React from 'react';
 import { Product } from '../../models/Product';
 import { formatCurrency } from '../../utils/formatCurrency';
 
@@ -94,4 +95,5 @@ const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => {
   );
 };
 
-export default ProductCard;
+// Use React.memo to prevent unnecessary re-renders
+export default React.memo(ProductCard);

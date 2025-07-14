@@ -28,7 +28,14 @@ export function AppDataProvider({ children }: { children: ReactNode }) {
     try {
       const storedProducts = localStorage.getItem('products');
       if (storedProducts) {
-        setProducts(JSON.parse(storedProducts));
+        // Convert ISO date strings back to Date objects
+        const parsedProducts = JSON.parse(storedProducts);
+        const productsWithDates = parsedProducts.map((product: any) => ({
+          ...product,
+          createdAt: product.createdAt ? new Date(product.createdAt) : new Date(),
+          updatedAt: product.updatedAt ? new Date(product.updatedAt) : new Date()
+        }));
+        setProducts(productsWithDates);
       }
     } catch (error) {
       console.error('Error loading products from localStorage', error);
@@ -38,7 +45,13 @@ export function AppDataProvider({ children }: { children: ReactNode }) {
   // Save products to localStorage whenever they change
   useEffect(() => {
     try {
-      localStorage.setItem('products', JSON.stringify(products));
+      // Convert dates to ISO strings for proper serialization
+      const serializedProducts = products.map(product => ({
+        ...product,
+        createdAt: product.createdAt instanceof Date ? product.createdAt.toISOString() : product.createdAt,
+        updatedAt: product.updatedAt instanceof Date ? product.updatedAt.toISOString() : product.updatedAt
+      }));
+      localStorage.setItem('products', JSON.stringify(serializedProducts));
     } catch (error) {
       console.error('Error saving products to localStorage', error);
     }
