@@ -28,5 +28,8 @@
     "react-dom": "^18.3.1",
     "tailwindcss": "^4.1.11",
     "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "eslint-plugin-jsdoc": "^51.3.4"
   }
 }

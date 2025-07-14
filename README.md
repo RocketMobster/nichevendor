@@ -102,3 +102,17 @@ After starting the server, you can access the application at [http://localhost:3
 - 80%+ user satisfaction during testing  
 
 ---
+
+## 📚 Documentation
+
+All code in this project follows strict documentation standards to ensure maintainability and ease of onboarding for new team members. See [Documentation Guide](./docs/DOCUMENTATION_GUIDE.md) for more details.
+
+Key documentation principles:
+- All files, components, and functions are documented with JSDoc comments
+- Interfaces and types have property descriptions
+- Complex logic includes explanatory inline comments
+- Documentation is updated alongside code changes
+
+We use ESLint with JSDoc plugins to help maintain documentation quality.
+
+---
