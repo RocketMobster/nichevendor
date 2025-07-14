@@ -1,0 +1,32 @@
+{
+  "name": "nichevendor",
+  "version": "0.1.0",
+  "description": "NicheVendor CRM - A mobile-first app for artists, crafters, and vendors who attend conventions, craft fairs, and expos",
+  "private": true,
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "version:bump": "npm version"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.1.11",
+    "@types/node": "^24.0.13",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "autoprefixer": "^10.4.21",
+    "next": "^14.2.30",
+    "postcss": "^8.5.6",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^5.8.3"
+  }
+}

@@ -1,0 +1,34 @@
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import { AppDataProvider } from '../context/AppDataContext';
+import Navbar from '../components/common/Navbar';
+import VersionDisplay from '../components/common/VersionDisplay';
+import { APP_NAME } from '../config/appConfig';
+
+const inter = Inter({ subsets: ['latin'] });
+
+export const metadata: Metadata = {
+  title: APP_NAME,
+  description: 'A mobile-first app for artists, crafters, and small business vendors',
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body className={inter.className}>
+        <AppDataProvider>
+          {children}
+          <div className="pb-16">
+            <VersionDisplay showCopyright={false} />
+          </div>
+          <Navbar />
+        </AppDataProvider>
+      </body>
+    </html>
+  );
+}

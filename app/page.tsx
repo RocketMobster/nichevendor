@@ -1,0 +1,84 @@
+"use client";
+
+import DashboardCard from '../components/dashboard/DashboardCard';
+import Button from '../components/common/Button';
+import { formatCurrency } from '../utils/formatCurrency';
+import { formatDate } from '../utils/dateUtils';
+
+export default function Home() {
+  // Mock data for initial display
+  const nextEvent = {
+    name: 'BlipCon',
+    location: 'Miami Expo Center',
+    startDate: new Date('2025-07-19'),
+    endDate: new Date('2025-07-20'),
+  };
+  
+  const alerts = [
+    { id: '1', message: '4 products low on stock' },
+    { id: '2', message: '2 custom orders pending' },
+  ];
+  
+  const salesSnapshot = {
+    total: 428,
+    event: 'ArtFest',
+    topProduct: 'Ghost Pins',
+  };
+  
+  const navItems = [
+    { icon: '📦', label: 'Inventory', path: '/inventory' },
+    { icon: '📅', label: 'Events', path: '/events' },
+    { icon: '💸', label: 'Sales', path: '/sales' },
+    { icon: '📝', label: 'Orders', path: '/orders' },
+    { icon: '🧰', label: 'Booth', path: '/booth' },
+    { icon: '⚙️', label: 'Settings', path: '/settings' },
+  ];
+
+  return (
+    <main className="flex min-h-screen flex-col items-center p-4 md:p-6">
+      <header className="w-full max-w-md mb-6">
+        <h1 className="text-2xl font-bold text-orange-500">🚀 NicheVendor CRM</h1>
+        <p className="text-sm opacity-70">Mobile-first vendor management</p>
+      </header>
+      
+      <section className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow p-4 mb-4">
+        <h2 className="text-lg font-semibold">📅 Next Event</h2>
+        <p className="text-sm">{nextEvent.name} - {nextEvent.location}</p>
+        <p className="text-xs opacity-70">
+          {formatDate(nextEvent.startDate, 'short')} - {formatDate(nextEvent.endDate, 'short')}
+        </p>
+      </section>
+
+      <section className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow p-4 mb-4">
+        <h2 className="text-lg font-semibold">🔔 Alerts</h2>
+        <ul className="text-sm">
+          {alerts.map((alert) => (
+            <li key={alert.id} className="py-1">{alert.message}</li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="w-full max-w-md mb-4">
+        <DashboardCard
+          title={`Last Event: ${salesSnapshot.event}`}
+          value={formatCurrency(salesSnapshot.total)}
+          icon="💰"
+        />
+        <p className="text-sm mt-1">Top Product: "{salesSnapshot.topProduct}"</p>
+      </section>
+
+      <nav className="w-full max-w-md grid grid-cols-3 gap-2">
+        {navItems.map((item) => (
+          <Button 
+            key={item.path}
+            variant="primary"
+            className="p-3 flex flex-col items-center"
+          >
+            <span className="text-xl">{item.icon}</span>
+            <span className="text-xs">{item.label}</span>
+          </Button>
+        ))}
+      </nav>
+    </main>
+  );
+}
