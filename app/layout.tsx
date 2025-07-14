@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { AppDataProvider } from '../context/AppDataContext';
 import Navbar from '../components/common/Navbar';
+import Breadcrumbs from '../components/common/Breadcrumbs';
 import VersionDisplay from '../components/common/VersionDisplay';
 import { APP_NAME } from '../config/appConfig';
 
@@ -22,7 +23,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AppDataProvider>
-          {children}
+          <Breadcrumbs />
+          <main className="px-4">
+            {children}
+          </main>
           <div className="pb-16">
             <VersionDisplay showCopyright={false} />
           </div>

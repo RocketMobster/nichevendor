@@ -18,7 +18,7 @@ const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-4 flex items-center gap-3">
       <div
-        className="w-16 h-16 rounded-lg bg-gray-200 flex items-center justify-center"
+        className="w-16 h-16 rounded-lg bg-gray-200 flex items-center justify-center text-center"
         style={{ minWidth: '4rem' }}
       >
         {imageUrl ? (
@@ -26,9 +26,17 @@ const ProductCard = ({ product, onEdit, onDelete }: ProductCardProps) => {
             src={imageUrl} 
             alt={name} 
             className="w-full h-full object-cover rounded-lg"
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = "/images/placeholder-product.jpg"; // Fallback to placeholder
+            }}
           />
         ) : (
-          <span className="text-2xl">📦</span>
+          <img 
+            src="/images/placeholder-product.jpg" 
+            alt="Product placeholder" 
+            className="w-full h-full object-cover rounded-lg opacity-50" 
+          />
         )}
       </div>
       

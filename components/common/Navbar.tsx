@@ -26,13 +26,15 @@ const Navbar = () => {
           const isActive = pathname === item.path;
           
           return (
-            <Link href={item.path} key={item.path}>
-              <div className={`p-2 flex flex-col items-center ${
-                isActive ? 'text-orange-500' : ''
-              }`}>
-                <span className="text-xl">{item.icon}</span>
-                <span className="text-xs">{item.label}</span>
-              </div>
+            <Link 
+              href={item.path} 
+              key={item.path}
+              className={`p-2 flex flex-col items-center transition-colors ${
+                isActive ? 'text-orange-500' : 'text-gray-700 dark:text-gray-300 hover:text-orange-400 dark:hover:text-orange-400'
+              }`}
+            >
+              <span className="text-xl">{item.icon}</span>
+              <span className="text-xs">{item.label}</span>
             </Link>
           );
         })}

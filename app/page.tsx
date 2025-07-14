@@ -1,5 +1,6 @@
 "use client";
 
+import Link from 'next/link';
 import DashboardCard from '../components/dashboard/DashboardCard';
 import Button from '../components/common/Button';
 import { formatCurrency } from '../utils/formatCurrency';
@@ -41,19 +42,26 @@ export default function Home() {
         <p className="text-sm opacity-70">Mobile-first vendor management</p>
       </header>
       
-      <section className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow p-4 mb-4">
-        <h2 className="text-lg font-semibold">📅 Next Event</h2>
-        <p className="text-sm">{nextEvent.name} - {nextEvent.location}</p>
-        <p className="text-xs opacity-70">
-          {formatDate(nextEvent.startDate, 'short')} - {formatDate(nextEvent.endDate, 'short')}
-        </p>
-      </section>
+      <Link href="/events" className="block w-full max-w-md">
+        <section className="bg-white dark:bg-gray-800 rounded-xl shadow p-4 mb-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+          <h2 className="text-lg font-semibold">📅 Next Event</h2>
+          <p className="text-sm">{nextEvent.name} - {nextEvent.location}</p>
+          <p className="text-xs opacity-70">
+            {formatDate(nextEvent.startDate, 'short')} - {formatDate(nextEvent.endDate, 'short')}
+          </p>
+        </section>
+      </Link>
 
       <section className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow p-4 mb-4">
         <h2 className="text-lg font-semibold">🔔 Alerts</h2>
         <ul className="text-sm">
           {alerts.map((alert) => (
-            <li key={alert.id} className="py-1">{alert.message}</li>
+            <li key={alert.id} className="py-1 flex justify-between items-center">
+              <span>{alert.message}</span>
+              <Link href={alert.id === '1' ? '/inventory' : '/orders'}>
+                <span className="text-orange-500 text-xs">View &rarr;</span>
+              </Link>
+            </li>
           ))}
         </ul>
       </section>
@@ -69,14 +77,15 @@ export default function Home() {
 
       <nav className="w-full max-w-md grid grid-cols-3 gap-2">
         {navItems.map((item) => (
-          <Button 
-            key={item.path}
-            variant="primary"
-            className="p-3 flex flex-col items-center"
-          >
-            <span className="text-xl">{item.icon}</span>
-            <span className="text-xs">{item.label}</span>
-          </Button>
+          <Link href={item.path} key={item.path} className="block">
+            <Button 
+              variant="primary"
+              className="p-3 flex flex-col items-center w-full"
+            >
+              <span className="text-xl">{item.icon}</span>
+              <span className="text-xs">{item.label}</span>
+            </Button>
+          </Link>
         ))}
       </nav>
     </main>

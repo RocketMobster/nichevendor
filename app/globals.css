@@ -25,3 +25,10 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+/* Fix for visited links */
+a:visited {
+  color: inherit;
+}
+
+/* Active link styles will be controlled by component classes */
