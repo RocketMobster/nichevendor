@@ -526,17 +526,20 @@ export default function NewOrderPage() {
               left: '50%',
               transform: 'translate(-50%, -50%)',
               backgroundColor: '#ffffff',
-              width: '90%',
-              maxWidth: '500px',
+              width: '95%',
+              maxWidth: 'calc(100vw - 20px)',
+              maxHeight: '80vh',
               borderRadius: '8px',
               boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.25)',
               zIndex: 9999,
-              overflow: 'hidden',
+              overflow: 'auto',
+              WebkitOverflowScrolling: 'touch',
               display: 'block',
               opacity: 1,
               border: '1px solid #e5e7eb',
               height: 'auto',
-              color: '#000000' /* Force black text color */
+              color: '#000000', /* Force black text color */
+              margin: '0 auto'
             }}
           >
               <div style={{

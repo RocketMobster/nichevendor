@@ -63,6 +63,12 @@ jobs:
           echo "Copying custom index.html to build output"
           cp index.html out/index.html
           
+          # Ensure mobile fixes are included in the output
+          echo "Copying mobile fix files to output"
+          mkdir -p out/mobile-fixes
+          cp public/mobile-fixes.css out/mobile-fixes.css
+          cp public/mobile-fixes.js out/mobile-fixes.js
+          
           echo "Listing output directory:"
           ls -la out/
       

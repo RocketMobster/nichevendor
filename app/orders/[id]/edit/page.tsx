@@ -560,8 +560,8 @@ export default function EditOrderPage() {
             
             {/* Modal Container */}
             <div className="relative flex items-center justify-center h-full p-4">
-              <div className="w-full max-w-md mx-auto">
-                <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-xl border-2 border-orange-500 max-h-[80vh] overflow-y-auto">
+              <div className="w-full max-w-[calc(100vw-20px)] mx-auto">
+                <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-xl border-2 border-orange-500 max-h-[80vh] overflow-y-auto webkit-overflow-scrolling-touch">
                   <div className="bg-orange-500 text-white px-6 py-3 flex justify-between items-center border-b border-orange-300">
                     <h3 id="product-selector-title" className="font-bold text-lg">Select Product</h3>
                     <button 

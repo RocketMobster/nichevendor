@@ -40,13 +40,16 @@ const VersionFooter = ({ className = '', showBackButton = false, onBackClick }: 
                 display: 'flex',
                 alignItems: 'center',
                 marginRight: '0.75rem',
-                padding: '0.45rem 0.85rem',
+                padding: '0.5rem 1rem',
                 borderRadius: '9999px',
                 backgroundColor: '#F97316', /* orange-500 */
                 color: 'white',
-                boxShadow: '0 2px 4px rgba(249, 115, 22, 0.4)',
+                boxShadow: '0 2px 4px rgba(249, 115, 22, 0.4), 0 0 0 3px rgba(249, 115, 22, 0.2)',
                 transition: 'all 0.2s',
                 animation: 'pulse 2s infinite',
+                minWidth: '80px',
+                justifyContent: 'center',
+                minHeight: '40px',
               }}
               onMouseOver={(e) => {
                 e.currentTarget.style.backgroundColor = '#EA580C'; /* orange-600 */
@@ -70,9 +73,10 @@ const VersionFooter = ({ className = '', showBackButton = false, onBackClick }: 
               </svg>
               <span style={{ 
                 color: 'white',
-                fontSize: '0.8rem',
-                fontWeight: '600',
-                marginLeft: '0.3rem' 
+                fontSize: '0.9rem',
+                fontWeight: '700',
+                marginLeft: '0.3rem',
+                textShadow: '0 1px 1px rgba(0,0,0,0.2)'
               }}>Back</span>
             </button>
           )}

@@ -16,12 +16,14 @@ import FooterWithNavigation from '../components/layout/FooterWithNavigation';
 import ModernStyle from '../components/common/ModernStyle'; // Import ModernStyle component
 import GlobalStyles from '../components/common/GlobalStyles'; // Import our GlobalStyles component
 import { APP_NAME } from '../config/appConfig';
+import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: APP_NAME,
   description: 'A mobile-first app for artists, crafters, and small business vendors',
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
 };
 
 /**
@@ -38,6 +40,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        {/* Include mobile fixes CSS */}
+        <link rel="stylesheet" href="/nichevendor/mobile-fixes.css" />
+      </head>
       <body className={`${inter.className}`}>
         <ThemeProvider>
           <AppDataProvider>
@@ -47,12 +53,15 @@ export default function RootLayout({
             
             <div className="flex flex-col min-h-screen">
               <Breadcrumbs />
-              <main className="flex-grow px-4 py-4 md:px-6 md:py-6 pb-20 mb-16">
+              <main className="flex-grow px-4 py-4 md:px-6 md:py-6 pb-20 mb-16 overflow-x-hidden">
                 {children}
               </main>
             </div>
             <FooterWithNavigation />
             <Navbar />
+            
+            {/* Include mobile fixes JavaScript */}
+            <Script src="/nichevendor/mobile-fixes.js" strategy="lazyOnload" />
           </AppDataProvider>
         </ThemeProvider>
       </body>

@@ -43,7 +43,7 @@ const Navbar = () => {
   ];
   
   return (
-    <nav className="fixed bottom-4 left-4 right-4 bg-white rounded-xl shadow-lg p-2 border-2 border-orange-400 z-40">
+    <nav className="fixed bottom-4 left-4 right-4 bg-white rounded-xl shadow-lg p-2 border-2 border-orange-400 z-40 max-w-lg mx-auto">
       <div className="flex justify-around">
         {navItems.map((item) => {
           const isActive = pathname === item.path;
