@@ -69,6 +69,10 @@ jobs:
           cp public/mobile-fixes.css out/mobile-fixes.css
           cp public/mobile-fixes.js out/mobile-fixes.js
           
+          # Copy backup redirect page
+          echo "Copying backup redirect page"
+          cp public/redirect.html out/redirect.html
+          
           echo "Listing output directory:"
           ls -la out/
       
