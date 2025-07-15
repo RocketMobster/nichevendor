@@ -1,0 +1,416 @@
+"use client";
+
+/**
+ * @file orders/new/page.tsx
+ * @description Component for creating a new customer order
+ * Allows users to add customer information and order details
+ */
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useAppData } from '../../../context/AppDataContext';
+import Button from '../../../components/common/Button';
+import { Order, OrderItem } from '../../../models/Order';
+import { v4 as uuidv4 } from 'uuid';
+
+/**
+ * NewOrderPage component for creating a new order
+ * @returns {JSX.Element} New order form page
+ */
+export default function NewOrderPage() {
+  const router = useRouter();
+  const { addOrder, products } = useAppData();
+
+  const [customerName, setCustomerName] = useState<string>('');
+  const [customerEmail, setCustomerEmail] = useState<string>('');
+  const [customerPhone, setCustomerPhone] = useState<string>('');
+  const [deadline, setDeadline] = useState<string>('');
+  const [notes, setNotes] = useState<string>('');
+  const [items, setItems] = useState<OrderItem[]>([
+    { id: uuidv4(), description: '', price: 0, quantity: 1 }
+  ]);
+  const [showProductSelector, setShowProductSelector] = useState<boolean>(false);
+  const [selectedItemIndex, setSelectedItemIndex] = useState<number | null>(null);
+  const [productSearchTerm, setProductSearchTerm] = useState<string>('');
+  
+  /**
+   * Add a new item to the order
+   */
+  const addItem = () => {
+    setItems([...items, { id: uuidv4(), description: '', price: 0, quantity: 1 }]);
+  };
+
+  /**
+   * Remove an item from the order
+   * @param {string} id - ID of the item to remove
+   */
+  const removeItem = (id: string) => {
+    setItems(items.filter(item => item.id !== id));
+  };
+
+  /**
+   * Update an item's details
+   * @param {string} id - ID of the item to update
+   * @param {Object} updates - Object containing the properties to update
+   */
+  const updateItem = (id: string, updates: Partial<OrderItem>) => {
+    setItems(items.map(item => {
+      if (item.id === id) {
+        return { ...item, ...updates };
+      }
+      return item;
+    }));
+  };
+
+  /**
+   * Calculate the total price of the order
+   * @returns {number} Total price of all items
+   */
+  const calculateTotal = () => {
+    return items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  };
+
+  /**
+   * Submit the form and create a new order
+   * @param {React.FormEvent} e - Form event
+   */
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!customerName.trim()) {
+      alert('Customer name is required');
+      return;
+    }
+    
+    if (items.length === 0 || items.some(item => !item.description.trim())) {
+      alert('All items must have a description');
+      return;
+    }
+    
+    // Calculate the total amount
+    const totalAmount = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    
+    const newOrder: Order = {
+      id: uuidv4(),
+      customerName: customerName.trim(),
+      customerEmail: customerEmail.trim() || undefined,
+      customerPhone: customerPhone.trim() || undefined,
+      products: items,
+      status: 'pending',
+      notes: notes.trim() || undefined,
+      deadline: deadline ? new Date(deadline).toISOString() : undefined,
+      totalAmount: totalAmount,
+      isPaid: false, // Default to unpaid for new orders
+      updatedAt: new Date().toISOString()
+    };
+    
+    addOrder(newOrder);
+    router.push('/orders');
+  };
+
+  return (
+    <main className="flex min-h-screen flex-col p-4 md:p-6 pb-20">
+      <header className="mb-6">
+        <div className="flex items-center mb-4">
+          <Link href="/orders" className="text-gray-500 mr-2">
+            ← Back
+          </Link>
+          <h1 className="text-2xl font-bold text-orange-500">New Order</h1>
+        </div>
+      </header>
+      
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Customer Details */}
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-4">
+          <h2 className="font-bold mb-4 text-lg">Customer Information</h2>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Name <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                className="w-full p-2 rounded border"
+                value={customerName}
+                onChange={(e) => setCustomerName(e.target.value)}
+                required
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Email
+              </label>
+              <input
+                type="email"
+                className="w-full p-2 rounded border"
+                value={customerEmail}
+                onChange={(e) => setCustomerEmail(e.target.value)}
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Phone
+              </label>
+              <input
+                type="tel"
+                className="w-full p-2 rounded border"
+                value={customerPhone}
+                onChange={(e) => setCustomerPhone(e.target.value)}
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Deadline
+              </label>
+              <input
+                type="date"
+                className="w-full p-2 rounded border"
+                value={deadline}
+                onChange={(e) => setDeadline(e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
+        
+        {/* Order Items */}
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-4">
+          <h2 className="font-bold mb-4 text-lg">Order Items</h2>
+          
+          <div className="space-y-4">
+            {items.map((item, index) => (
+              <div key={item.id} className="p-3 border rounded bg-gray-50 dark:bg-gray-700">
+                <div className="flex justify-between mb-2">
+                  <h3 className="font-medium">Item {index + 1}</h3>
+                  {items.length > 1 && (
+                    <button 
+                      type="button" 
+                      onClick={() => removeItem(item.id)}
+                      className="text-red-500 text-sm"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
+                
+                <div className="space-y-3">
+                  <div>
+                    <div className="flex justify-between items-center">
+                      <label className="block text-sm font-medium mb-1">
+                        Description <span className="text-red-500">*</span>
+                      </label>
+                      <button 
+                        type="button"
+                        onClick={() => {
+                          setSelectedItemIndex(index);
+                          setShowProductSelector(true);
+                        }}
+                        className="text-xs text-blue-500 hover:text-blue-700"
+                      >
+                        Select from Inventory
+                      </button>
+                    </div>
+                    <input
+                      type="text"
+                      className="w-full p-2 rounded border"
+                      value={item.description}
+                      onChange={(e) => updateItem(item.id, { description: e.target.value })}
+                      required
+                    />
+                    {item.productId && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        Product ID: {item.productId}
+                      </p>
+                    )}
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="block text-sm font-medium mb-1">
+                        Price ($) <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        className="w-full p-2 rounded border"
+                        value={item.price}
+                        onChange={(e) => updateItem(item.id, { price: parseFloat(e.target.value) || 0 })}
+                        required
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium mb-1">
+                        Quantity
+                      </label>
+                      <input
+                        type="number"
+                        min="1"
+                        className="w-full p-2 rounded border"
+                        value={item.quantity}
+                        onChange={(e) => updateItem(item.id, { quantity: parseInt(e.target.value) || 1 })}
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+            
+            <button 
+              type="button" 
+              onClick={addItem}
+              className="text-orange-500 hover:text-orange-700 flex items-center text-sm font-medium"
+            >
+              + Add Another Item
+            </button>
+          </div>
+        </div>
+        
+        {/* Product Selector Modal */}
+        {showProductSelector && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center">
+            <div className="fixed inset-0 bg-black opacity-75"></div>
+            
+            <div className="relative w-full max-w-md mx-auto">
+              <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-xl border-4 border-orange-500">
+                <div className="bg-orange-500 text-white px-6 py-3 flex justify-between items-center">
+                  <h3 className="font-bold text-lg">Select Product</h3>
+                  <button 
+                    type="button"
+                    onClick={() => setShowProductSelector(false)}
+                    className="bg-white text-orange-600 hover:bg-gray-100 hover:text-red-600 rounded-full w-8 h-8 flex items-center justify-center text-xl font-bold"
+                  >
+                    ✕
+                  </button>
+                </div>
+                
+                <div className="p-6">
+                  {products.length === 0 ? (
+                    <p className="text-gray-500 text-center p-4">No products in inventory</p>
+                  ) : (
+                    <>
+                      <div className="mb-3">
+                        <div className="relative">
+                          <input 
+                            type="text" 
+                            placeholder="Search products..." 
+                            className="w-full p-3 pl-10 rounded-lg border border-orange-200 focus:border-orange-400 focus:ring-2 focus:ring-orange-200 outline-none"
+                            value={productSearchTerm}
+                            onChange={(e) => setProductSearchTerm(e.target.value)}
+                          />
+                          <div className="absolute left-3 top-3 text-orange-400">🔍</div>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-4">
+                        {/* No Products Found State */}
+                        {products.filter(product => 
+                          product.name.toLowerCase().includes(productSearchTerm.toLowerCase()) ||
+                          (product.description && product.description.toLowerCase().includes(productSearchTerm.toLowerCase()))
+                        ).length === 0 ? (
+                          <div className="text-center p-6 bg-gray-50 dark:bg-gray-900 rounded-lg border border-dashed border-orange-300">
+                            <div className="text-3xl mb-2">🔍</div>
+                            <p className="text-gray-600 dark:text-gray-400">No products match your search</p>
+                            {productSearchTerm && (
+                              <button 
+                                className="mt-2 text-sm text-orange-500 hover:text-orange-700"
+                                onClick={() => setProductSearchTerm('')}
+                              >
+                                Clear search
+                              </button>
+                            )}
+                          </div>
+                        ) : (
+                          <div className="space-y-3 max-h-[50vh] overflow-y-auto">
+                            {/* Filtered Product List */}
+                            {products
+                              .filter(product => 
+                                product.name.toLowerCase().includes(productSearchTerm.toLowerCase()) ||
+                                (product.description && product.description.toLowerCase().includes(productSearchTerm.toLowerCase()))
+                              )
+                              .map(product => (
+                                <div 
+                                  key={product.id} 
+                                  className="p-4 border border-orange-200 rounded-lg cursor-pointer hover:bg-orange-100 dark:hover:bg-gray-700 bg-white dark:bg-gray-900 shadow-sm hover:shadow-md transition-all"
+                                  onClick={() => {
+                                    if (selectedItemIndex !== null) {
+                                      updateItem(items[selectedItemIndex].id, {
+                                        productId: product.id,
+                                        description: product.name,
+                                        price: product.price || 0
+                                      });
+                                      // Reset search and close modal
+                                      setProductSearchTerm('');
+                                      setShowProductSelector(false);
+                                    }
+                                  }}
+                                >
+                                  <div className="flex justify-between items-center mb-1">
+                                    <span className="font-medium text-gray-800 dark:text-white">{product.name}</span>
+                                    <span className="bg-orange-50 text-orange-800 px-3 py-1 rounded-full font-semibold">${product.price?.toFixed(2) || '0.00'}</span>
+                                  </div>
+                                  <p className="text-sm text-gray-700 dark:text-gray-300">
+                                    {product.description?.substring(0, 50)}
+                                    {product.description && product.description.length > 50 ? '...' : ''}
+                                  </p>
+                                  <div className="flex justify-between items-center mt-2 text-xs">
+                                    <span className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
+                                      {product.category || 'Uncategorized'}
+                                    </span>
+                                    <span className="text-gray-500 dark:text-gray-400">
+                                      Stock: {product.stock}
+                                    </span>
+                                  </div>
+                                </div>
+                              ))
+                            }
+                          </div>
+                        )}
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        
+        {/* Notes */}
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-4">
+          <h2 className="font-bold mb-4 text-lg">Additional Notes</h2>
+          <textarea
+            className="w-full p-2 rounded border min-h-[100px]"
+            placeholder="Add any special instructions or details about this order..."
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+          ></textarea>
+        </div>
+        
+        {/* Order Summary */}
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-4">
+          <h2 className="font-bold mb-4 text-lg">Order Summary</h2>
+          <div className="flex justify-between font-bold text-lg mb-4">
+            <span>Total:</span>
+            <span>${calculateTotal().toFixed(2)}</span>
+          </div>
+          
+          <div className="flex gap-3">
+            <Button variant="primary" type="submit" className="w-full">
+              Create Order
+            </Button>
+            <Link href="/orders" className="w-full">
+              <Button variant="outline" className="w-full" type="button">
+                Cancel
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </form>
+    </main>
+  );
+}
