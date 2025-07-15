@@ -10,6 +10,7 @@
 import Link from 'next/link';
 import DashboardCard from '../components/dashboard/DashboardCard';
 import Button from '../components/common/Button';
+import Card from '../components/ui/Card';
 import { formatCurrency } from '../utils/formatCurrency';
 import { formatDate } from '../utils/dateUtils';
 
@@ -55,58 +56,103 @@ export default function Home() {
   ];
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-4 md:p-6">
-      <header className="w-full max-w-md mb-6">
-        <h1 className="text-2xl font-bold text-orange-500">🚀 NicheVendor CRM</h1>
-        <p className="text-sm opacity-70">Mobile-first vendor management</p>
+    <main className="flex min-h-screen flex-col items-center p-4 md:p-6 bg-neutral-50">
+      <header className="w-full max-w-5xl mb-8">
+        <h1 className="text-3xl font-bold text-orange-600 flex items-center">
+          <span className="text-3xl mr-2">🚀</span>
+          NicheVendor CRM
+        </h1>
+        <p className="text-neutral-600">Mobile-first vendor management for creators</p>
       </header>
       
-      <Link href="/events" className="block w-full max-w-md">
-        <section className="bg-white dark:bg-gray-800 rounded-xl shadow p-4 mb-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-          <h2 className="text-lg font-semibold">📅 Next Event</h2>
-          <p className="text-sm">{nextEvent.name} - {nextEvent.location}</p>
-          <p className="text-xs opacity-70">
-            {formatDate(nextEvent.startDate, 'short')} - {formatDate(nextEvent.endDate, 'short')}
-          </p>
-        </section>
-      </Link>
-
-      <section className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow p-4 mb-4">
-        <h2 className="text-lg font-semibold">🔔 Alerts</h2>
-        <ul className="text-sm">
-          {alerts.map((alert) => (
-            <li key={alert.id} className="py-1 flex justify-between items-center">
-              <span>{alert.message}</span>
-              <Link href={alert.id === '1' ? '/inventory' : '/orders'}>
-                <span className="text-orange-500 text-xs">View &rarr;</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="w-full max-w-md mb-4">
-        <DashboardCard
-          title={`Last Event: ${salesSnapshot.event}`}
-          value={formatCurrency(salesSnapshot.total)}
-          icon="💰"
-        />
-        <p className="text-sm mt-1">Top Product: "{salesSnapshot.topProduct}"</p>
-      </section>
-
-      <nav className="w-full max-w-md grid grid-cols-3 gap-2">
-        {navItems.map((item) => (
-          <Link href={item.path} key={item.path} className="block">
-            <Button 
-              variant="primary"
-              className="p-3 flex flex-col items-center w-full"
+      <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Main Content - Left Side */}
+        <div className="md:col-span-2 space-y-6">
+          {/* Next Event Card */}
+          <Link href="/events" className="block">
+            <Card 
+              variant="elevated" 
+              borderAccent
+              className="hover:shadow-lg transition-shadow duration-200"
+              title="Next Event"
+              icon="📅"
+              subtitle={formatDate(nextEvent.startDate, 'short') + ' - ' + formatDate(nextEvent.endDate, 'short')}
             >
-              <span className="text-xl">{item.icon}</span>
-              <span className="text-xs">{item.label}</span>
-            </Button>
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-4 text-lg">
+                  🗓️
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-neutral-800">{nextEvent.name}</h3>
+                  <p className="text-neutral-600">{nextEvent.location}</p>
+                </div>
+              </div>
+            </Card>
           </Link>
-        ))}
-      </nav>
+          
+          {/* Event Metrics */}
+          <div className="grid grid-cols-2 gap-4">
+            <DashboardCard
+              title={`Last Event: ${salesSnapshot.event}`}
+              value={formatCurrency(salesSnapshot.total)}
+              icon="💰"
+              className="h-full"
+            />
+            <DashboardCard
+              title="Top Product"
+              value={salesSnapshot.topProduct}
+              icon="⭐"
+              className="h-full"
+            />
+          </div>
+        </div>
+
+        {/* Sidebar - Right Side */}
+        <div className="space-y-6">
+          {/* Alerts Card */}
+          <Card 
+            variant="elevated"
+            title="Alerts"
+            icon="🔔"
+            className="bg-white"
+          >
+            <ul className="divide-y divide-neutral-100">
+              {alerts.map((alert) => (
+                <li key={alert.id} className="py-2 flex justify-between items-center">
+                  <span className="text-neutral-700">{alert.message}</span>
+                  <Link href={alert.id === '1' ? '/inventory' : '/orders'}>
+                    <Button variant="text" size="xs">
+                      View &rarr;
+                    </Button>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Card>
+          
+          {/* Quick Access Navigation */}
+          <Card
+            variant="elevated"
+            title="Quick Access"
+            icon="⚡"
+          >
+            <div className="grid grid-cols-2 gap-2">
+              {navItems.map((item) => (
+                <Link href={item.path} key={item.path} className="block">
+                  <Button 
+                    variant="outline"
+                    fullWidth
+                    className="py-3 flex flex-col items-center justify-center h-20"
+                    icon={<span className="text-2xl mb-1">{item.icon}</span>}
+                  >
+                    <span>{item.label}</span>
+                  </Button>
+                </Link>
+              ))}
+            </div>
+          </Card>
+        </div>
+      </div>
     </main>
   );
 }

@@ -50,13 +50,13 @@ const Breadcrumbs = () => {
   ];
 
   return (
-    <div className="flex items-center text-sm py-3 px-4 text-gray-600 dark:text-gray-400 overflow-x-auto">
+    <div className="flex items-center text-sm py-4 px-6 text-neutral-500 overflow-x-auto bg-white border-b border-neutral-100 shadow-sm">
       {breadcrumbs.map((breadcrumb, index) => (
         <div key={breadcrumb.path} className="flex items-center whitespace-nowrap">
-          {index > 0 && <span className="mx-2">/</span>}
+          {index > 0 && <span className="mx-2 text-neutral-300">/</span>}
           
           {index === breadcrumbs.length - 1 ? (
-            <span className="font-medium text-gray-900 dark:text-gray-200">
+            <span className="font-medium text-orange-600">
               {breadcrumb.name}
             </span>
           ) : (

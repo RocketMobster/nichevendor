@@ -43,7 +43,7 @@ const Navbar = () => {
   ];
   
   return (
-    <nav className="fixed bottom-4 left-4 right-4 bg-white dark:bg-gray-900 rounded-xl shadow-lg p-2">
+    <nav className="fixed bottom-4 left-4 right-4 bg-white rounded-xl shadow-lg p-2 border-2 border-orange-400 z-40">
       <div className="flex justify-around">
         {navItems.map((item) => {
           const isActive = pathname === item.path;
@@ -53,11 +53,20 @@ const Navbar = () => {
               href={item.path} 
               key={item.path}
               className={`p-2 flex flex-col items-center transition-colors ${
-                isActive ? 'text-orange-500' : 'text-gray-700 dark:text-gray-300 hover:text-orange-400 dark:hover:text-orange-400'
+                isActive 
+                  ? 'text-orange-500 font-medium' 
+                  : 'text-neutral-600 hover:text-orange-400'
               }`}
             >
-              <span className="text-xl">{item.icon}</span>
+              <div className={`text-xl mb-1 ${
+                isActive 
+                  ? 'bg-orange-100 p-2 rounded-full w-10 h-10 flex items-center justify-center shadow-sm' 
+                  : ''
+              }`}>
+                {item.icon}
+              </div>
               <span className="text-xs">{item.label}</span>
+              {isActive && <div className="h-1 w-12 bg-orange-500 rounded-full mt-1"></div>}
             </Link>
           );
         })}

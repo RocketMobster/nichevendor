@@ -3,27 +3,45 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 250, 250, 250;
-  --background-end-rgb: 255, 255, 255;
+  /* Primary colors */
+  --color-primary-50: #fff7ed;
+  --color-primary-100: #ffedd5;
+  --color-primary-200: #fed7aa;
+  --color-primary-300: #fdba74;
+  --color-primary-400: #fb923c;
+  --color-primary-500: #f97316;
+  --color-primary-600: #ea580c;
+  --color-primary-700: #c2410c;
+  --color-primary-800: #9a3412;
+  --color-primary-900: #7c2d12;
+  
+  /* Neutral colors */
+  --color-neutral-50: #f9fafb;
+  --color-neutral-100: #f3f4f6;
+  --color-neutral-200: #e5e7eb;
+  --color-neutral-300: #d1d5db;
+  --color-neutral-400: #9ca3af;
+  --color-neutral-500: #6b7280;
+  --color-neutral-600: #4b5563;
+  --color-neutral-700: #374151;
+  --color-neutral-800: #1f2937;
+  --color-neutral-900: #111827;
+
+  /* Foreground and background */
+  --foreground-rgb: 31, 41, 55; /* neutral-800 */
+  --background-rgb: 249, 250, 251; /* neutral-50 */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 30, 30, 30;
-    --background-end-rgb: 10, 10, 10;
+    --background-rgb: 31, 41, 55;
   }
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: rgb(var(--background-rgb));
 }
 
 /* Fix for visited links */
@@ -32,3 +50,104 @@ a:visited {
 }
 
 /* Active link styles will be controlled by component classes */
+
+/* Modern Form Styling */
+input, select, textarea, button {
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+input, select, textarea {
+  border: 1px solid #e5e7eb;
+  padding: 0.5rem 0.75rem;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #fb923c;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+}
+
+/* Button styling */
+button {
+  font-weight: 500;
+}
+
+button:not([disabled]):hover {
+  transform: translateY(-1px);
+}
+
+button:not([disabled]):active {
+  transform: translateY(0);
+}
+
+/* Card styling */
+.card {
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:hover {
+  background-color: #fff7ed;
+}
+
+/* Badge styling */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.badge-primary {
+  background-color: #ffedd5;
+  color: #9a3412;
+}
+
+/* Modern scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #fdba74;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #fb923c;
+}

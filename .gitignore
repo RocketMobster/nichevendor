@@ -42,3 +42,10 @@ next-env.d.ts
 # Lock files
 package-lock.json
 yarn.lock
+
+# Test and debug pages
+/app/debug-modal/
+/app/test-modal/
+/app/test-modal-fix/
+/app/style-showcase/
+/public/test-modal.html
