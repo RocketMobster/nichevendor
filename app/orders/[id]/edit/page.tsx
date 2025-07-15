@@ -5,6 +5,12 @@
  * @description Component for editing an existing order
  */
 
+// Import the generateStaticParams function
+import { generateStaticParams } from './generateStaticParams';
+
+// Export the generateStaticParams function for Next.js static export
+export { generateStaticParams };
+
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';

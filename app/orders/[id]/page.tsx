@@ -5,6 +5,12 @@
  * @description Order details page component for viewing a specific order
  */
 
+// Import the generateStaticParams function
+import { generateStaticParams } from './generateStaticParams';
+
+// Export the generateStaticParams function for Next.js static export
+export { generateStaticParams };
+
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAppData } from '../../../context/AppDataContext';
