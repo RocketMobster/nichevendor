@@ -13,7 +13,7 @@
     "lint": "next lint",
     "version:bump": "npm version",
     "export": "next build",
-    "deploy": "npm run export && touch out/.nojekyll"
+    "deploy": "next build && touch out/.nojekyll"
   },
   "keywords": [],
   "author": "",
