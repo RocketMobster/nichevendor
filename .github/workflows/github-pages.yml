@@ -26,9 +26,14 @@ jobs:
       
       - name: Install dependencies
         run: npm install
+        
+      - name: List files in directory
+        run: ls -la
       
       - name: Build website
-        run: npm run build
+        run: |
+          echo "Starting build..."
+          npm run build || (echo "Build failed with code $?" && ls -la && exit 1)
       
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
