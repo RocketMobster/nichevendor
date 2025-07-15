@@ -13,12 +13,14 @@
     "lint": "next lint",
     "version:bump": "npm version",
     "export": "next build",
-    "deploy": "next build && touch out/.nojekyll"
+    "deploy": "next build && touch out/.nojekyll && echo 'Deployment complete!'",
+    "ghpages": "npm run deploy && echo 'Ready for GitHub Pages!'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.11",
     "@types/node": "^24.0.13",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",

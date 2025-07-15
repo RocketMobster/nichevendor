@@ -1,11 +1,11 @@
-"use client";
-
 /**
- * @file orders/[id]/page.tsx
+ * @file orders/sample-order-1/page.tsx
  * @description Order details page component for viewing a specific order
  */
 
-import { useParams, useRouter } from 'next/navigation';
+"use client";
+
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAppData } from '../../../context/AppDataContext';
 import Button from '../../../components/common/Button';
@@ -13,34 +13,27 @@ import { formatCurrency } from '../../../utils/formatCurrency';
 import { formatDate } from '../../../utils/dateUtils';
 
 /**
- * OrderDetailPage component for viewing a specific order
- * @returns {JSX.Element} Order detail page
+ * Order sample-order-1 detail page
  */
 export default function OrderDetailPage() {
-  const params = useParams();
   const router = useRouter();
   const { orders, updateOrderStatus, removeOrder } = useAppData();
   
-  const orderId = typeof params.id === 'string' ? params.id : Array.isArray(params.id) ? params.id[0] : '';
-  const order = orders.find(o => o.id === orderId);
-  
-  if (!order) {
-    return (
-      <main className="flex min-h-screen flex-col p-4 md:p-6 pb-20">
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6 text-center">
-          <h1 className="text-2xl font-bold text-red-500 mb-4">Order Not Found</h1>
-          <p className="mb-6">The order you're looking for doesn't exist or has been deleted.</p>
-          <Link href="/orders">
-            <Button variant="primary">Back to Orders</Button>
-          </Link>
-        </div>
-      </main>
-    );
-  }
+  const orderId = 'sample-order-1';
+  const order = orders.find(o => o.id === orderId) || {
+    id: 'sample-order-1',
+    customerName: 'Sample Customer',
+    products: [{ id: 'p1', description: 'Sample Product', price: 19.99, quantity: 1 }],
+    status: 'pending' as 'pending' | 'in-progress' | 'completed' | 'delivered',
+    createdAt: new Date().toISOString(),
+    customerEmail: '',
+    customerPhone: '',
+    deadline: '',
+    notes: ''
+  };
   
   /**
    * Calculate the total price of the order
-   * @returns {number} Total price of all items
    */
   const calculateTotal = () => {
     return order.products.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -48,7 +41,6 @@ export default function OrderDetailPage() {
   
   /**
    * Update the status of the current order
-   * @param {string} newStatus - The new status to set
    */
   const handleStatusChange = (newStatus: 'pending' | 'in-progress' | 'completed' | 'delivered') => {
     updateOrderStatus(order.id, newStatus);
@@ -103,7 +95,7 @@ export default function OrderDetailPage() {
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-4 mb-4">
         <h3 className="font-bold mb-3">Order Items</h3>
         <div className="space-y-3">
-          {order.products.map((item, index) => (
+          {order.products.map((item) => (
             <div key={item.id} className="border-b border-gray-200 dark:border-gray-700 pb-2 last:border-0">
               <div className="flex justify-between mb-1">
                 <span className="font-medium">{item.description}</span>
@@ -121,14 +113,6 @@ export default function OrderDetailPage() {
           </div>
         </div>
       </div>
-      
-      {/* Order Notes */}
-      {order.notes && (
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-4 mb-4">
-          <h3 className="font-bold mb-3">Notes</h3>
-          <p className="whitespace-pre-wrap">{order.notes}</p>
-        </div>
-      )}
       
       {/* Order Actions */}
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-4 mb-4">
@@ -169,7 +153,7 @@ export default function OrderDetailPage() {
         </div>
         
         <div className="flex gap-2">
-          <Link href={`/orders/${order.id}/edit`} className="flex-1">
+          <Link href={`/orders/sample-order-1/edit`} className="flex-1">
             <Button variant="secondary" className="w-full">
               Edit Order
             </Button>

@@ -26,22 +26,9 @@ jobs:
       
       - name: Install dependencies
         run: npm install
-      
-      - name: Setup .env file if needed
-        run: |
-          echo "NODE_ENV=production" > .env
-          echo "NEXT_PUBLIC_BASE_PATH=/nichevendor" >> .env
-      
+        
       - name: List files in directory
         run: ls -la
-      
-      - name: Clean dynamic route directories
-        run: |
-          rm -rf app/orders/[id]
-          mkdir -p app/orders/sample-order-1
-          mkdir -p app/orders/sample-order-2
-          mkdir -p app/orders/sample-order-1/edit
-          mkdir -p app/orders/sample-order-2/edit
       
       - name: Build website
         run: |

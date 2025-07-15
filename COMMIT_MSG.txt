@@ -1,0 +1,22 @@
+feat(ui): Enhance UI with back navigation and improved modals
+
+# Version 0.3.0
+
+## Added
+- Back button navigation feature across all pages
+- Pulsing animation effects for improved visibility
+- Dynamic footer navigation with context-awareness
+- Product selection modal in Orders page
+
+## Fixed
+- Modal display issues in Inventory page
+- Add from Inventory button functionality in Orders
+- Footer positioning and styling consistency
+- Z-index issues with overlapping UI elements
+
+## Changed
+- Updated color scheme to orange and black
+- Enhanced footer with fixed positioning
+- Improved modal styling for consistency
+- Enhanced button styles and interaction feedback
+- Overall UI modernization with consistent patterns
