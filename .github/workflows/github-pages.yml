@@ -58,11 +58,11 @@ jobs:
           }
           echo "Build completed, touching .nojekyll file"
           touch out/.nojekyll
-          # Create a basic index.html redirect if it doesn't exist
-          if [ ! -f out/index.html ]; then
-            echo "Creating default index.html"
-            echo '<meta http-equiv="refresh" content="0;url=/nichevendor/orders">' > out/index.html
-          fi
+          
+          # Copy our custom index.html to the build output
+          echo "Copying custom index.html to build output"
+          cp index.html out/index.html
+          
           echo "Listing output directory:"
           ls -la out/
       
