@@ -58,6 +58,11 @@ jobs:
           }
           echo "Build completed, touching .nojekyll file"
           touch out/.nojekyll
+          # Create a basic index.html redirect if it doesn't exist
+          if [ ! -f out/index.html ]; then
+            echo "Creating default index.html"
+            echo '<meta http-equiv="refresh" content="0;url=/nichevendor/orders">' > out/index.html
+          fi
           echo "Listing output directory:"
           ls -la out/
       
@@ -66,3 +71,17 @@ jobs:
         with:
           folder: out  # The folder the action should deploy
           branch: gh-pages  # The branch the action should deploy to
+      
+      - name: Print GitHub Pages instructions
+        run: |
+          echo "======================================"
+          echo "DEPLOYMENT COMPLETE"
+          echo "======================================"
+          echo "Please ensure GitHub Pages is configured properly:"
+          echo "1. Go to your repository Settings"
+          echo "2. Select 'Pages' from the left menu"
+          echo "3. Make sure 'Source' is set to 'Deploy from a branch'"
+          echo "4. Set the branch to 'gh-pages' with folder set to '/ (root)'"
+          echo "5. After saving, wait a few minutes for the deployment to complete"
+          echo "6. Your site should be available at https://rocketmobster.github.io/nichevendor/"
+          echo "======================================"
