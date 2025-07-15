@@ -11,7 +11,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "version:bump": "npm version"
+    "version:bump": "npm version",
+    "export": "next build",
+    "deploy": "npm run export && touch out/.nojekyll"
   },
   "keywords": [],
   "author": "",
