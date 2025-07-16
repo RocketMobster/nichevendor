@@ -38,11 +38,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const assetPrefix = process.env.NEXT_PUBLIC_BASE_PATH || '';
   return (
     <html lang="en">
       <head>
-        {/* Include mobile fixes CSS */}
-        <link rel="stylesheet" href="/nichevendor/mobile-fixes.css" />
+        {/* Include mobile fixes CSS with dynamic assetPrefix */}
+        <link rel="stylesheet" href={`${assetPrefix}/mobile-fixes.css`} />
       </head>
       <body className={`${inter.className}`}>
         <ThemeProvider>
@@ -60,8 +61,8 @@ export default function RootLayout({
             <FooterWithNavigation />
             <Navbar />
             
-            {/* Include mobile fixes JavaScript */}
-            <Script src="/nichevendor/mobile-fixes.js" strategy="lazyOnload" />
+            {/* Include mobile fixes JavaScript with dynamic assetPrefix */}
+            <Script src={`${assetPrefix}/mobile-fixes.js`} strategy="lazyOnload" />
           </AppDataProvider>
         </ThemeProvider>
       </body>
