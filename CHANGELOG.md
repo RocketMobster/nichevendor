@@ -1,4 +1,22 @@
 # [0.4.0] - 2025-07-16
+# [0.5.0] - 2025-07-16
+
+### Changed
+- Refactored dynamic routes for static export compatibility (Next.js)
+- Split server/client logic for edit order page
+- Cleaned up duplicate and conflicting files in app directory
+- Updated routing and build process for static export
+
+### Added
+- GitHub Actions workflow for automatic deployment to GitHub Pages
+- Static params generation for all dynamic routes
+
+### Removed
+- Old dynamic route files incompatible with static export
+
+### Fixed
+- Build errors related to static export and routing
+- Improved deployment reliability and automation
 
 ### Changed
 - Updated GitHub Actions workflow to remove custom index.html and rely on Next.js static export for root route
