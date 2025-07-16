@@ -6,8 +6,7 @@
 
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.css';
-import '../styles/global.css'; // Import our new global styles
+import '../styles/globals.css'; // Import Tailwind-enabled global styles
 import { AppDataProvider } from '../context/AppDataContext';
 import { ThemeProvider } from '../context/ThemeContext'; // Import our ThemeProvider
 import Navbar from '../components/common/Navbar';
