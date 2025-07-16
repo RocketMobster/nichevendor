@@ -59,9 +59,6 @@ jobs:
           echo "Build completed, touching .nojekyll file"
           touch out/.nojekyll
           
-          # Copy our custom index.html to the build output
-          echo "Copying custom index.html to build output"
-          cp index.html out/index.html
           
           # Ensure mobile fixes are included in the output
           echo "Copying mobile fix files to output"
