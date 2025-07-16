@@ -140,7 +140,7 @@ export default function Home() {
               {navItems.map((item) => (
                 <Link href={item.path} key={item.path} className="block">
                   <Button 
-                    variant="outline"
+                    variant="primary"
                     fullWidth
                     className="py-3 flex flex-col items-center justify-center h-20"
                     icon={<span className="text-2xl mb-1">{item.icon}</span>}

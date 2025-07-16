@@ -35,8 +35,6 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   
-  // Skip type checking
-  skipTypeChecking: true,
   
   // Skip middleware
   skipMiddlewareUrlNormalize: true
