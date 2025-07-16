@@ -1,3 +1,20 @@
+# [0.4.0] - 2025-07-16
+
+### Changed
+- Updated GitHub Actions workflow to remove custom index.html and rely on Next.js static export for root route
+- Updated layout.tsx to use dynamic assetPrefix for static assets, ensuring consistent styling on GitHub Pages
+- Bumped app version to 0.4.0
+
+### Fixed
+- Resolved redirect loop and flashing issues on GitHub Pages
+- Fixed inconsistent loading of CSS and JS assets after navigation
+- Ensured mobile fixes and backup redirect pages are included in deployment
+- Improved reliability of mobile styling and asset loading
+
+### Added
+- Mobile-specific CSS and JS fixes for scrolling, modal sizing, and navigation
+- Enhanced back button and footer visibility for mobile usability
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
