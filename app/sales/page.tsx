@@ -41,7 +41,7 @@ export default function SalesPage() {
         </div>
         
         <div className="mt-4">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-4">
+          <div className="bg-white dark:bg-white border border-orange-100 rounded-xl shadow p-4">
             <h2 className="text-lg font-semibold">Sales Summary</h2>
             <div className="flex justify-between mt-2">
               <div className="text-center">
@@ -67,25 +67,27 @@ export default function SalesPage() {
         {sales.map((sale) => (
           <div
             key={sale.id}
-            className="bg-white dark:bg-gray-800 rounded-xl shadow p-4"
+            className="bg-white dark:bg-white border border-orange-100 rounded-xl shadow p-4 flex items-center gap-3 transition-all"
           >
-            <div className="flex justify-between items-start">
-              <div>
-                <h3 className="font-semibold">{sale.eventName}</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {formatDate(sale.date)}
-                </p>
-              </div>
-              <div className="text-right">
-                <p className="font-bold">{formatCurrency(sale.totalAmount)}</p>
-                <p className="text-xs text-gray-600">{sale.itemCount} items</p>
-              </div>
+            <div className="w-12 h-12 rounded-xl bg-yellow-100 flex items-center justify-center text-2xl text-orange-500 mr-4">
+              💸
             </div>
-            
-            <div className="flex justify-end mt-3">
-              <Button variant="outline" size="sm">
-                Details
-              </Button>
+            <div className="flex-1">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="font-semibold text-neutral-800">{sale.eventName}</h3>
+                  <p className="text-sm text-gray-600">{formatDate(sale.date)}</p>
+                </div>
+                <div className="text-right">
+                  <p className="font-bold">{formatCurrency(sale.totalAmount)}</p>
+                  <p className="text-xs text-gray-600">{sale.itemCount} items</p>
+                </div>
+              </div>
+              <div className="flex justify-end mt-3">
+                <Button variant="outline" size="sm">
+                  Details
+                </Button>
+              </div>
             </div>
           </div>
         ))}

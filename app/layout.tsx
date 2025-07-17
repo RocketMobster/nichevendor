@@ -1,3 +1,4 @@
+// Removed 'use client' directive per Next.js requirements
 /**
  * @file layout.tsx
  * @description Root layout component that wraps all pages in the application.
@@ -11,9 +12,11 @@ import { AppDataProvider } from '../context/AppDataContext';
 import { ThemeProvider } from '../context/ThemeContext'; // Import our ThemeProvider
 import Navbar from '../components/common/Navbar';
 import Breadcrumbs from '../components/common/Breadcrumbs';
-import FooterWithNavigation from '../components/layout/FooterWithNavigation';
+import ClientBreadcrumbs from '../components/layout/ClientBreadcrumbs';
+import VersionFooter from '../components/common/VersionFooter';
 import ModernStyle from '../components/common/ModernStyle'; // Import ModernStyle component
 import GlobalStyles from '../components/common/GlobalStyles'; // Import our GlobalStyles component
+import SidebarNavigation, { SidebarProvider } from '../components/layout/SidebarNavigation';
 import { APP_NAME } from '../config/appConfig';
 import Script from 'next/script';
 
@@ -51,14 +54,18 @@ export default function RootLayout({
             <ModernStyle />
             <GlobalStyles />
             
-            <div className="flex flex-col min-h-screen">
-              <Breadcrumbs />
-              <main className="flex-grow px-4 py-4 md:px-6 md:py-6 pb-20 mb-16 overflow-x-hidden">
-                {children}
-              </main>
-            </div>
-            <FooterWithNavigation />
-            <Navbar />
+            <SidebarProvider>
+              <div className="flex min-h-screen">
+                <SidebarNavigation />
+              <div className="flex flex-col flex-1">
+                <ClientBreadcrumbs />
+                <main className="flex-grow px-4 py-4 md:px-6 md:py-6 pb-20 mb-16 overflow-x-hidden bg-white">
+                  {children}
+                </main>
+              </div>
+              </div>
+            </SidebarProvider>
+            <VersionFooter />
             
             {/* Include mobile fixes JavaScript with dynamic assetPrefix */}
             <Script src={`${assetPrefix}/mobile-fixes.js`} strategy="lazyOnload" />

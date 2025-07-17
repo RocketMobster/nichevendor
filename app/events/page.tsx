@@ -33,7 +33,7 @@ export default function EventsPage() {
   ];
 
   return (
-    <main className="flex min-h-screen flex-col p-4 md:p-6 pb-20">
+    <main className="flex min-h-screen flex-col p-4 md:p-6 pb-20 font-sans bg-white dark:bg-white">
       <header className="mb-6">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold text-orange-500">📅 Events</h1>
@@ -47,7 +47,7 @@ export default function EventsPage() {
         {events.map((event) => (
           <div
             key={event.id}
-            className="bg-white dark:bg-gray-800 rounded-xl shadow p-4"
+            className="bg-white dark:bg-white border border-orange-100 rounded-xl shadow p-4"
           >
             <div className="flex justify-between items-start">
               <h3 className="font-semibold">{event.name}</h3>
@@ -78,3 +78,4 @@ export default function EventsPage() {
     </main>
   );
 }
+  // TODO: Add dark/light theme support to the roadmap if not present

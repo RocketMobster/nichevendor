@@ -83,3 +83,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Implemented React Context API for state management
 - Added TypeScript interfaces for all data models
 - Configured Tailwind CSS with custom theme extensions
+
+## [0.6.0] - 2025-07-16
+
+### Highlights
+- 🚀 **Major Inventory & Add Product Workflow Refactor**
+  - Moved Add Category logic from a standalone modal to an inline flow within Add Product, eliminating empty categories and streamlining product creation.
+  - Created a new Add Product page, linked from Inventory, using real categories from product data.
+  - Recovered from file corruption and fully restored Inventory page functionality and UI.
+
+### Added
+- Add Product page with inline Add Category modal.
+- Custom breadcrumbs for Add Product page.
+- Consistent card styling across Events, Sales, Orders, and Inventory pages.
+
+### Changed
+- Navigation and layout: removed bottom navigation, restored VersionFooter, improved SidebarNavigation.
+- Breadcrumbs logic: removed duplicate breadcrumbs, improved navigation clarity.
+- Moved Add Category logic to Add Product flow for better UX.
+
+### Fixed
+- Build errors related to route/page conflicts and "use client" directive placement.
+- Persistent UI and navigation bugs, including blank screens and modal rendering issues.
+- Accessibility, performance, and security improvements.
+
+### Removed
+- Legacy Navbar component.
+- Redundant/duplicate breadcrumbs on Add Product page.

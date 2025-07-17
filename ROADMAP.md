@@ -82,4 +82,25 @@ This roadmap is subject to change based on user feedback and development progres
 
 ---
 
-*Last updated: July 13, 2025*
+## Roadmap Update - 2025-07-16
+
+### Completed
+- Refactored Inventory and Add Product workflow (see changelog highlight).
+- Restored Booths, Events, Inventory, Sales, and Orders pages.
+- Unified card styling and improved UI consistency.
+- Fixed navigation, breadcrumbs, and build errors.
+
+### In Progress / Next Steps
+- Address Next.js metadata warnings (viewport export).
+- Further polish Inventory/Add Product integration and workflow.
+- Review static export and API route support.
+- Continue accessibility and performance improvements.
+
+### Future Features
+- Enhanced product/category management (bulk actions, editing).
+- Advanced reporting and analytics.
+- Vendor profile and booth customization.
+
+---
+
+*Last updated: July 16, 2025*

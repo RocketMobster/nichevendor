@@ -85,7 +85,7 @@ export default function OrdersPage() {
       </header>
       
       {orders.length === 0 ? (
-        <div className="flex flex-col items-center justify-center bg-white dark:bg-gray-800 rounded-xl shadow p-8 mb-4 text-center">
+        <div className="flex flex-col items-center justify-center bg-white dark:bg-white rounded-xl shadow p-8 mb-4 text-center">
           <div className="text-5xl mb-4">📋</div>
           <h2 className="text-xl font-bold mb-2">No Orders Yet</h2>
           <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
@@ -96,16 +96,30 @@ export default function OrdersPage() {
           </Link>
         </div>
       ) : filteredOrders.length === 0 ? (
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6 mb-4 text-center">
+        <div className="bg-white dark:bg-white rounded-xl shadow p-6 mb-4 text-center">
           <p className="text-gray-600 dark:text-gray-400">No orders match your filter criteria</p>
         </div>
       ) : (
         <div className="space-y-4">
           {filteredOrders.map(order => (
-            <div key={order.id} className="bg-white dark:bg-gray-800 rounded-xl shadow p-4">
-              <div className="flex justify-between items-center mb-2">
-                <h3 className="font-bold">{order.customerName}</h3>
-                <span className={`px-2 py-1 rounded-full text-xs ${
+            <div
+              key={order.id}
+              className="bg-white dark:bg-white border border-orange-100 rounded-xl shadow p-4 flex items-center gap-4 mb-4"
+            >
+              <div className="flex justify-between items-center mb-2 w-full">
+                <div className="flex-1 min-w-0 mr-4">
+                  <h3 className="font-bold text-lg truncate">{order.customerName}</h3>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                    {order.createdAt && (
+                      <p className="mb-1">Date: {formatDate(order.createdAt)}</p>
+                    )}
+                    {order.customerEmail && (
+                      <p>Email: {order.customerEmail}</p>
+                    )}
+                  </div>
+                </div>
+                
+                <span className={`px-3 py-1 rounded-full text-xs ${
                   order.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
                   order.status === 'in-progress' ? 'bg-blue-100 text-blue-800' :
                   order.status === 'completed' ? 'bg-green-100 text-green-800' :
@@ -115,28 +129,19 @@ export default function OrdersPage() {
                 </span>
               </div>
               
-              <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                {order.createdAt && (
-                  <p>Date: {formatDate(order.createdAt)}</p>
-                )}
-                {order.customerEmail && (
-                  <p>Email: {order.customerEmail}</p>
-                )}
-              </div>
-              
-              <div className="border-t border-gray-200 dark:border-gray-700 pt-2 mt-2">
+              <div className="border-t border-gray-200 dark:border-gray-700 pt-2 mt-2 w-full">
                 <p className="text-sm font-semibold">Items:</p>
                 <ul className="text-sm">
                   {order.products.map((item, idx) => (
                     <li key={idx} className="flex justify-between">
                       <span>{item.description}</span>
-                      <span>{formatCurrency(item.price)}</span>
+                      <span className="text-orange-500 font-semibold">{formatCurrency(item.price)}</span>
                     </li>
                   ))}
                 </ul>
                 <div className="flex justify-between font-semibold mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
                   <span>Total:</span>
-                  <span>
+                  <span className="text-orange-500 font-bold text-lg">
                     {formatCurrency(order.products.reduce((sum, item) => sum + item.price, 0))}
                   </span>
                 </div>
@@ -155,7 +160,7 @@ export default function OrdersPage() {
         </div>
       )}
       
-      <div className="w-full max-w-md bg-orange-50 dark:bg-gray-700 rounded-xl p-4 mb-4 mt-6">
+      <div className="w-full max-w-md bg-orange-50 dark:bg-orange-50 rounded-xl p-4 mb-4 mt-6">
         <h3 className="font-medium mb-2">💡 Order Management Tips</h3>
         <ul className="text-sm space-y-2 list-disc pl-4">
           <li>Track custom orders from conventions</li>

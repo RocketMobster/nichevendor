@@ -48,9 +48,9 @@ const ProductCard = React.memo(({ product, onEdit, onDelete }: ProductCardProps)
       </div>
       
       <div className="flex-1">
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
           <h3 className="font-semibold text-neutral-800">{name}</h3>
-          <span className="text-xs bg-orange-50 text-orange-700 px-2 py-0.5 rounded-full">
+          <span className="text-xs px-2 py-0.5 rounded-full flex items-center justify-center" style={{ backgroundColor: '#FFEDD5', color: '#ea580c', minHeight: '1.5rem' }}>
             {category}
           </span>
         </div>
