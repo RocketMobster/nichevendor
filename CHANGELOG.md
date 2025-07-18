@@ -84,7 +84,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added TypeScript interfaces for all data models
 - Configured Tailwind CSS with custom theme extensions
 
-## [0.6.0] - 2025-07-16
+## [0.6.0] - 2025-07-17
 
 ### Highlights
 - 🚀 **Major Inventory & Add Product Workflow Refactor**
@@ -96,16 +96,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add Product page with inline Add Category modal.
 - Custom breadcrumbs for Add Product page.
 - Consistent card styling across Events, Sales, Orders, and Inventory pages.
+- Product icon/image picker: users can select a preset icon or upload a custom image for products.
+- Custom image upload with preview, validation, and click-to-change support.
+- Icon color picker: users can choose a color for preset icons before submitting a product.
+- Inline confirmation modal and automatic redirect after adding a product.
+- Product model and ProductCard updated to support and display custom icon colors.
 
 ### Changed
 - Navigation and layout: removed bottom navigation, restored VersionFooter, improved SidebarNavigation.
 - Breadcrumbs logic: removed duplicate breadcrumbs, improved navigation clarity.
 - Moved Add Category logic to Add Product flow for better UX.
+- Add Product form: icon and image selection are now mutually exclusive; selecting one clears the other.
+- Improved form stability: eliminated layout shifting/expansion when selecting icons or images.
+- Enhanced accessibility and UX for icon/image selection and color picking.
 
 ### Fixed
 - Build errors related to route/page conflicts and "use client" directive placement.
 - Persistent UI and navigation bugs, including blank screens and modal rendering issues.
 - Accessibility, performance, and security improvements.
+- Prevented accidental form submission/validation when clicking icon buttons.
+- Fixed preview not clearing when switching between icon and image.
+- Fixed preview not displaying after switching from icon to image.
+- Fixed form field and card layout shifting on icon selection.
+- Fixed all known issues with icon/image picker and color persistence.
 
 ### Removed
 - Legacy Navbar component.
