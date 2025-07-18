@@ -9,6 +9,7 @@
 import React from 'react';
 import { Product } from '../../models/Product';
 import { formatCurrency } from '../../utils/formatCurrency';
+import { StarIcon, GiftIcon, UserIcon, HomeIcon } from "@heroicons/react/24/solid";
 
 /**
  * Props interface for the ProductCard component
@@ -23,13 +24,21 @@ interface ProductCardProps {
   onDelete?: (productId: string) => void;
 }
 
+const ICONS: Record<string, React.FC<{ className?: string }>> = {
+  Star: StarIcon,
+  Gift: GiftIcon,
+  User: UserIcon,
+  Home: HomeIcon,
+  // Add more icons as needed
+}
+
 /**
  * A card component that displays product information with image, details, and actions
  * @param {ProductCardProps} props - Component props 
  * @returns {JSX.Element} Product card component
  */
 const ProductCard = React.memo(({ product, onEdit, onDelete }: ProductCardProps) => {
-  const { id, name, description, price, stock, imageUrl, category } = product;
+  const { id, name, description, price, stock, imageUrl, category, icon, iconColor } = product;
   
   // Constants for business logic
   const lowStockThreshold = 10;
@@ -41,10 +50,24 @@ const ProductCard = React.memo(({ product, onEdit, onDelete }: ProductCardProps)
         className="w-16 h-16 rounded-xl bg-orange-50 flex items-center justify-center text-center overflow-hidden"
         style={{ minWidth: '4rem' }}
       >
-        {/* Static placeholder for all products to prevent image loading flashes */}
-        <div className="w-full h-full flex items-center justify-center bg-orange-100 text-orange-500 text-xl">
-          📦
-        </div>
+        {imageUrl ? (
+          <img 
+            src={imageUrl} 
+            alt="Product" 
+            className="w-16 h-16 object-cover rounded-xl" 
+            onError={(e) => { e.currentTarget.style.display = 'none'; }}
+          />
+        ) : null}
+        {!imageUrl && icon && ICONS[icon] ? (
+          <span style={{ color: iconColor || "#ea580c" }}>
+            {React.createElement(ICONS[icon], { className: "w-10 h-10" })}
+          </span>
+        ) : null}
+        {!imageUrl && (!icon || !ICONS[icon]) ? (
+          <div className="w-full h-full flex items-center justify-center bg-orange-100 text-orange-500 text-xl">
+            📦
+          </div>
+        ) : null}
       </div>
       
       <div className="flex-1">

@@ -1,19 +1,33 @@
+
 "use client";
 
 import { useState } from "react";
 import Link from "next/link";
 import Button from "../../../components/common/Button";
 import { useAppData } from "../../../context/AppDataContext";
+import ProductIconPicker from "../../../components/products/ProductIconPicker";
+import ProductImageUpload from "../../../components/products/ProductImageUpload";
+import { useRouter } from "next/navigation";
+
 export default function AddProductPage() {
-  const { products } = useAppData();
+  const { products, addProduct } = useAppData();
   const [productName, setProductName] = useState("");
   const [price, setPrice] = useState("");
   const [stock, setStock] = useState("");
-  // Extract unique categories from products
   const [customCategories, setCustomCategories] = useState<string[]>([]);
+  // ...existing code...
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
+  const [iconColor, setIconColor] = useState<string>("#ea580c"); // default orange
+  const router = useRouter();
+  // ...existing code...
+
+// ...existing code...
   const [selectedCategory, setSelectedCategory] = useState("");
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [newCategory, setNewCategory] = useState("");
+  const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
+  const [productImage, setProductImage] = useState<string | null>(null);
   const categories = Array.from(new Set([
     ...products.map((p) => p.category).filter(Boolean),
     ...customCategories
@@ -28,18 +42,51 @@ export default function AddProductPage() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Save product logic
-    alert(`Product "${productName}" (Stock: ${stock}) added to category "${selectedCategory}".`);
+    const newProduct = {
+      id: Date.now().toString(),
+      name: productName,
+      price: parseFloat(price),
+      stock: parseInt(stock),
+      category: selectedCategory,
+      icon: selectedIcon ?? undefined,
+      iconColor: selectedIcon ? iconColor : undefined,
+      imageUrl: productImage || '',
+      description: '',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    addProduct(newProduct);
+    setShowConfirmation(true);
     setProductName("");
     setPrice("");
     setStock("");
     setSelectedCategory("");
+    setSelectedIcon(null);
+    setProductImage(null);
+    setTimeout(() => {
+      setRedirecting(true);
+      if (router) router.push('/inventory');
+    }, 2000);
   };
 
   return (
     <main className="flex min-h-screen flex-col p-4 md:p-6 pb-20 font-sans bg-white dark:bg-white">
+      {showConfirmation && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-20">
+          <div className="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center">
+            <span className="text-4xl mb-2 text-orange-500">✅</span>
+            <h2 className="text-lg font-bold mb-2 text-orange-600">Product Added!</h2>
+            <p className="text-gray-600 mb-2">Your product was successfully added.</p>
+            {redirecting ? (
+              <span className="text-xs text-gray-400">Redirecting to inventory...</span>
+            ) : (
+              <span className="text-xs text-gray-400">You will be redirected shortly.</span>
+            )}
+          </div>
+        </div>
+      )}
       {/* Custom Breadcrumbs for Add Product page */}
       <nav className="mb-2">
         <div className="flex items-center text-sm py-4 px-6 text-neutral-500 overflow-x-auto bg-white border-b border-neutral-100 shadow-sm">
@@ -62,6 +109,35 @@ export default function AddProductPage() {
         <div className="bg-white rounded-xl shadow p-6">
           <h2 className="font-bold mb-4 text-lg">Product Details</h2>
           <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Product Icon <span className="text-gray-400">(optional)</span></label>
+              <div className="flex items-center gap-4">
+                <ProductIconPicker 
+                  onSelect={(icon) => { setSelectedIcon(icon); setProductImage(null); }}
+                  selected={selectedIcon}
+                  clearImage={() => setProductImage(null)}
+                  color={iconColor}
+                />
+                <div className="flex flex-col items-center">
+                  <label htmlFor="iconColor" className="text-xs text-gray-500 mb-1">Icon Color</label>
+                  <input
+                    id="iconColor"
+                    type="color"
+                    value={iconColor}
+                    onChange={e => setIconColor(e.target.value)}
+                    className="w-8 h-8 p-0 border-0 bg-transparent cursor-pointer"
+                    title="Pick icon color"
+                  />
+                </div>
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Product Image <span className="text-gray-400">(optional)</span></label>
+              <ProductImageUpload 
+                onImageSelect={(img) => { setProductImage(img); setSelectedIcon(null); }}
+                value={productImage}
+              />
+            </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Product Name <span className="text-red-500">*</span></label>
               <input

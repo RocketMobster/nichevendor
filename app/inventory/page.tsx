@@ -82,9 +82,6 @@ const InventoryPage = React.memo(function InventoryPage() {
               {category}
             </button>
           ))}
-          <button className="px-4 py-1.5 bg-white hover:bg-orange-100 rounded-full text-sm whitespace-nowrap flex items-center gap-1 text-orange-600" onClick={() => setShowCategoryModal(true)}>
-            <span>+</span> Category
-          </button>
         </div>
       </header>
       <div className="flex flex-col gap-3">

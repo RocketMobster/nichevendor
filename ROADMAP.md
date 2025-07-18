@@ -91,6 +91,7 @@ This roadmap is subject to change based on user feedback and development progres
 - Fixed navigation, breadcrumbs, and build errors.
 
 ### In Progress / Next Steps
+- Custom icon/image selection and upload for products (priority).
 - Address Next.js metadata warnings (viewport export).
 - Further polish Inventory/Add Product integration and workflow.
 - Review static export and API route support.
@@ -100,6 +101,7 @@ This roadmap is subject to change based on user feedback and development progres
 - Enhanced product/category management (bulk actions, editing).
 - Advanced reporting and analytics.
 - Vendor profile and booth customization.
+- Custom icon/image selection and upload for products, events, booths, orders, and sales.
 
 ---
 

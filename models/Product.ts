@@ -27,6 +27,8 @@ export interface Product {
   category: string;
   variants?: ProductVariant[];
   imageUrl?: string;
+  icon?: string; // icon name from ProductIconPicker
+  iconColor?: string; // hex color for icon
   createdAt: Date;
   updatedAt: Date;
 }
