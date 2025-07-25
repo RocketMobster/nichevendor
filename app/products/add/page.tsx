@@ -18,7 +18,6 @@ export default function AddProductPage() {
   // ...existing code...
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [redirecting, setRedirecting] = useState(false);
-  const [iconColor, setIconColor] = useState<string>("#ea580c"); // default orange
   const router = useRouter();
   // ...existing code...
 
@@ -51,7 +50,6 @@ export default function AddProductPage() {
       stock: parseInt(stock),
       category: selectedCategory,
       icon: selectedIcon ?? undefined,
-      iconColor: selectedIcon ? iconColor : undefined,
       imageUrl: productImage || '',
       description: '',
       createdAt: new Date(),
@@ -111,31 +109,12 @@ export default function AddProductPage() {
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Product Icon <span className="text-gray-400">(optional)</span></label>
-              <div className="flex items-center gap-4">
-                <ProductIconPicker 
-                  onSelect={(icon) => { setSelectedIcon(icon); setProductImage(null); }}
-                  selected={selectedIcon}
-                  clearImage={() => setProductImage(null)}
-                  color={iconColor}
-                />
-                <div className="flex flex-col items-center">
-                  <label htmlFor="iconColor" className="text-xs text-gray-500 mb-1">Icon Color</label>
-                  <input
-                    id="iconColor"
-                    type="color"
-                    value={iconColor}
-                    onChange={e => setIconColor(e.target.value)}
-                    className="w-8 h-8 p-0 border-0 bg-transparent cursor-pointer"
-                    title="Pick icon color"
-                  />
-                </div>
-              </div>
+              <ProductIconPicker onSelect={(icon) => { setSelectedIcon(icon); setProductImage(null); }} />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Product Image <span className="text-gray-400">(optional)</span></label>
               <ProductImageUpload 
                 onImageSelect={(img) => { setProductImage(img); setSelectedIcon(null); }}
-                value={productImage}
               />
             </div>
             <div>

@@ -10,6 +10,7 @@ import React from 'react';
 import { Product } from '../../models/Product';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { StarIcon, GiftIcon, UserIcon, HomeIcon } from "@heroicons/react/24/solid";
+import { PencilSquareIcon } from "@heroicons/react/24/outline";
 
 /**
  * Props interface for the ProductCard component
@@ -38,7 +39,7 @@ const ICONS: Record<string, React.FC<{ className?: string }>> = {
  * @returns {JSX.Element} Product card component
  */
 const ProductCard = React.memo(({ product, onEdit, onDelete }: ProductCardProps) => {
-  const { id, name, description, price, stock, imageUrl, category, icon, iconColor } = product;
+  const { id, name, description, price, stock, imageUrl, category, icon } = product;
   
   // Constants for business logic
   const lowStockThreshold = 10;
@@ -59,9 +60,7 @@ const ProductCard = React.memo(({ product, onEdit, onDelete }: ProductCardProps)
           />
         ) : null}
         {!imageUrl && icon && ICONS[icon] ? (
-          <span style={{ color: iconColor || "#ea580c" }}>
-            {React.createElement(ICONS[icon], { className: "w-10 h-10" })}
-          </span>
+          React.createElement(ICONS[icon], { className: "w-10 h-10 text-orange-500" })
         ) : null}
         {!imageUrl && (!icon || !ICONS[icon]) ? (
           <div className="w-full h-full flex items-center justify-center bg-orange-100 text-orange-500 text-xl">
@@ -101,21 +100,20 @@ const ProductCard = React.memo(({ product, onEdit, onDelete }: ProductCardProps)
         <div className="flex flex-col gap-2">
           {onEdit && (
             <button
-              onClick={() => onEdit(id)}
-              className="w-8 h-8 rounded-full bg-orange-50 hover:bg-orange-100 flex items-center justify-center text-orange-600"
-              aria-label="Edit product"
+              className="text-gray-400 hover:text-blue-500"
+              onClick={() => onEdit(product.id)}
+              aria-label="Edit"
             >
-              ✏️
+              <PencilSquareIcon className="h-5 w-5" />
             </button>
           )}
-          
           {onDelete && (
             <button
-              onClick={() => onDelete(id)}
-              className="w-8 h-8 rounded-full bg-red-50 hover:bg-red-100 flex items-center justify-center text-red-500"
-              aria-label="Delete product"
+              className="text-gray-400 hover:text-red-500"
+              onClick={() => onDelete(product.id)}
+              aria-label="Delete"
             >
-              🗑️
+              <span role="img" aria-label="Delete">🗑️</span>
             </button>
           )}
         </div>

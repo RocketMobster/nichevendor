@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { useAppData } from '../../context/AppDataContext';
 import Button from '../../components/common/Button';
@@ -9,7 +10,8 @@ import { Product } from '../../models/Product';
 import React, { useState } from 'react';
 
 const InventoryPage = React.memo(function InventoryPage() {
-  const { products } = useAppData();
+  const { products, deleteProduct } = useAppData();
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [showProductSelector, setShowProductSelector] = useState(false);
@@ -18,6 +20,8 @@ const InventoryPage = React.memo(function InventoryPage() {
   const [newCategory, setNewCategory] = useState('');
   const [categoryError, setCategoryError] = useState('');
   const [customCategories, setCustomCategories] = useState<string[]>([]);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [productToDelete, setProductToDelete] = useState<string | null>(null);
 
   // Get unique categories from products
   const categories = ['All', ...Array.from(new Set(products.map(p => p.category || ''))).filter(Boolean)];
@@ -43,21 +47,32 @@ const InventoryPage = React.memo(function InventoryPage() {
   });
 
   const handleEditProduct = (productId: string) => {
-    alert(`Edit product ${productId}`);
+    router.push(`/products/edit/${productId}`);
   };
 
   const handleDeleteProduct = (productId: string) => {
-    alert(`Delete product ${productId}`);
+    setProductToDelete(productId);
+    setShowDeleteConfirm(true);
+  };
+
+  const onConfirmDelete = () => {
+    if (productToDelete) {
+      deleteProduct(productToDelete);
+      setProductToDelete(null);
+      setShowDeleteConfirm(false);
+    }
   };
 
   return (
     <main className="flex min-h-screen flex-col p-4 md:p-6 pb-20 font-sans bg-white dark:bg-white">
       <header className="mb-6">
-        <div className="flex items-center justify-between mb-4 bg-white dark:bg-white p-4 rounded-xl">
-          <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl text-orange-500 mr-4">📦</div>
-          <h1 className="text-2xl font-bold text-orange-600 flex-1">Inventory</h1>
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-2xl font-bold text-orange-500 flex items-center gap-2">
+            <span className="text-xl align-middle">📦</span>
+            <span className="align-middle">Inventory</span>
+          </h1>
           <Link href="/products/add">
-            <Button variant="primary" size="sm">+ Add Product</Button>
+            <Button variant="primary" size="xs">+ Add Product</Button>
           </Link>
         </div>
         <div className="mb-4">
@@ -87,8 +102,8 @@ const InventoryPage = React.memo(function InventoryPage() {
       <div className="flex flex-col gap-3">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
-            <div className="bg-orange-50 dark:bg-orange-100 border border-orange-100 rounded-xl shadow p-0">
-              <ProductCard key={product.id} product={product} onEdit={handleEditProduct} onDelete={handleDeleteProduct} />
+            <div className="bg-orange-50 dark:bg-orange-100 border border-orange-100 rounded-xl shadow p-0" key={product.id}>
+              <ProductCard product={product} onEdit={handleEditProduct} onDelete={handleDeleteProduct} />
             </div>
           ))
         ) : (
@@ -100,6 +115,20 @@ const InventoryPage = React.memo(function InventoryPage() {
           </div>
         )}
       </div>
+
+      {/* Delete confirmation modal */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
+            <h2 className="text-lg font-bold mb-2 text-red-600">Delete Product?</h2>
+            <p className="mb-4">Are you sure you want to delete this product? This action cannot be undone.</p>
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => setShowDeleteConfirm(false)}>Cancel</Button>
+              <Button variant="danger" onClick={onConfirmDelete}>Delete</Button>
+            </div>
+          </div>
+        </div>
+      )}
       {/* Product Selector Modal */}
       {showProductSelector && (
         <React.Fragment>
@@ -145,12 +174,6 @@ const InventoryPage = React.memo(function InventoryPage() {
                     setCategoryError('Category name cannot be empty');
                     return;
                   }
-                  if (allCategories.includes(newCategory.trim())) {
-                    setCategoryError('Category already exists');
-                    return;
-                  }
-                  setCustomCategories([...customCategories, newCategory.trim()]);
-                  setSelectedCategory(newCategory.trim());
                   setNewCategory('');
                   setShowCategoryModal(false);
                 }}>Save</Button>

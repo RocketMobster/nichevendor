@@ -1,6 +1,6 @@
 # NicheVendor CRM
 
-**Version:** 0.1 (MVP Draft)  
+**Version:** 0.7.0  
 **Prepared By:** RocketMobster Software  
 **Date:** July 12, 2025  
 

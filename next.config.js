@@ -4,7 +4,7 @@ const nextConfig = {
   swcMinify: true,
   
   // GitHub Pages configuration
-  output: 'export',
+  // output: 'export',
   basePath: process.env.NODE_ENV === 'production' ? '/nichevendor' : '',
   assetPrefix: process.env.NODE_ENV === 'production' ? '/nichevendor/' : '',
   

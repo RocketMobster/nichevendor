@@ -18,6 +18,7 @@ export function useSidebar() {
 
 // ...existing code...
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
   HomeModernIcon,
   ShoppingCartIcon,
@@ -40,9 +41,7 @@ const navItems = [
 
 export default function SidebarNavigation() {
   const { open, setOpen } = useSidebar();
-  React.useEffect(() => {
-    console.log('Sidebar open state:', open);
-  }, [open]);
+  const pathname = usePathname();
 
   return (
     <>
@@ -53,16 +52,21 @@ export default function SidebarNavigation() {
         style={{ willChange: 'transform', backgroundClip: 'padding-box', background: open ? '#FFEDD5' : 'transparent' }}
       >
         <nav className="flex flex-col gap-2 px-2">
-          {navItems.map(({ href, label, icon: Icon }) => (
-            <Link key={href} href={href}
-              className={`flex items-center gap-2 py-2 px-2 rounded-lg transition-colors group ${open ? 'hover:bg-orange-100 focus:bg-orange-200' : 'opacity-0'} pointer-events-auto`}
-              tabIndex={open ? 0 : -1}
-              style={{ background: 'none' }}
-            >
-              <Icon className={`h-5 w-5 ${open ? 'text-orange-500 group-hover:text-orange-700' : 'text-orange-200'}`} aria-hidden="true" />
-              <span className={`text-sm font-medium ${open ? 'text-gray-800' : 'text-orange-200'}`}>{label}</span>
-            </Link>
-          ))}
+          {navItems.map(({ href, label, icon: Icon }) => {
+            const isActive = pathname === href || (href !== '/' && pathname.startsWith(href));
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={`flex items-center gap-2 py-2 px-2 rounded-lg transition-colors group pointer-events-auto ${open ? 'hover:bg-orange-100 focus:bg-orange-200' : 'opacity-0'} ${isActive ? 'border-l-4 border-orange-500 bg-orange-100 font-bold shadow text-orange-900' : ''}`}
+                tabIndex={open ? 0 : -1}
+                style={{ background: 'none' }}
+              >
+                <Icon className={`h-5 w-5 ${open ? (isActive ? 'text-orange-600' : 'text-orange-500 group-hover:text-orange-700') : 'text-orange-200'}`} aria-hidden="true" />
+                <span className={`text-sm font-medium ${open ? (isActive ? 'text-orange-900' : 'text-gray-800') : 'text-orange-200'}`}>{label}</span>
+              </Link>
+            );
+          })}
         </nav>
       </aside>
       {/* Handle/Ribbon */}

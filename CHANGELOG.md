@@ -1,52 +1,22 @@
-
-# Changelog
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [0.6.0] - 2025-07-17
-
-### Highlights
-- 🚀 **Major Inventory & Add Product Workflow Refactor**
-  - Moved Add Category logic from a standalone modal to an inline flow within Add Product, eliminating empty categories and streamlining product creation.
-  - Created a new Add Product page, linked from Inventory, using real categories from product data.
-  - Recovered from file corruption and fully restored Inventory page functionality and UI.
+# [0.7.0] - 2025-07-24
 
 ### Added
-- Add Product page with inline Add Category modal.
-- Custom breadcrumbs for Add Product page.
-- Consistent card styling across Events, Sales, Orders, and Inventory pages.
-- Product icon/image picker: users can select a preset icon or upload a custom image for products.
-- Custom image upload with preview, validation, and click-to-change support.
-- Icon color picker: users can choose a color for preset icons before submitting a product.
-- Inline confirmation modal and automatic redirect after adding a product.
-- Product model and ProductCard updated to support and display custom icon colors.
+- Edit Product page with dynamic route (`/products/edit/[id]`)
+- Product image upload preview (always 64x64 square)
+- Delete product confirmation modal
+- Custom VS Code tasks and keyboard shortcuts for `npm run dev` and `npm run build`
 
 ### Changed
-- Navigation and layout: removed bottom navigation, restored VersionFooter, improved SidebarNavigation.
-- Breadcrumbs logic: removed duplicate breadcrumbs, improved navigation clarity.
-- Moved Add Category logic to Add Product flow for better UX.
-- Add Product form: icon and image selection are now mutually exclusive; selecting one clears the other.
-- Improved form stability: eliminated layout shifting/expansion when selecting icons or images.
-- Enhanced accessibility and UX for icon/image selection and color picking.
+- Switched from static export to dynamic rendering for Next.js (removed `output: export`)
+- Improved ProductCard edit/delete icon logic and navigation
+- ProductImageUpload preview is now always a perfect square
 
 ### Fixed
-- Build errors related to route/page conflicts and "use client" directive placement.
-- Persistent UI and navigation bugs, including blank screens and modal rendering issues.
-- Accessibility, performance, and security improvements.
-- Prevented accidental form submission/validation when clicking icon buttons.
-- Fixed preview not clearing when switching between icon and image.
-- Fixed preview not displaying after switching from icon to image.
-- Fixed form field and card layout shifting on icon selection.
-- Fixed all known issues with icon/image picker and color persistence.
+- Edit and delete actions now work reliably from the inventory page
+- Keyboard shortcut for dev server now works as intended
 
-### Removed
-- Legacy Navbar component.
-- Redundant/duplicate breadcrumbs on Add Product page.
-
-## [0.5.0] - 2025-07-16
+# [0.4.0] - 2025-07-16
+# [0.5.0] - 2025-07-16
 
 ### Changed
 - Refactored dynamic routes for static export compatibility (Next.js)
@@ -80,22 +50,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Mobile-specific CSS and JS fixes for scrolling, modal sizing, and navigation
 - Enhanced back button and footer visibility for mobile usability
 
-## [0.4.0] - 2025-07-16
+# Changelog
 
-### Changed
-- Updated GitHub Actions workflow to remove custom index.html and rely on Next.js static export for root route
-- Updated layout.tsx to use dynamic assetPrefix for static assets, ensuring consistent styling on GitHub Pages
-- Bumped app version to 0.4.0
+All notable changes to this project will be documented in this file.
 
-### Fixed
-- Resolved redirect loop and flashing issues on GitHub Pages
-- Fixed inconsistent loading of CSS and JS assets after navigation
-- Ensured mobile fixes and backup redirect pages are included in deployment
-- Improved reliability of mobile styling and asset loading
-
-### Added
-- Mobile-specific CSS and JS fixes for scrolling, modal sizing, and navigation
-- Enhanced back button and footer visibility for mobile usability
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [0.3.0] - 2025-07-15
 
@@ -122,6 +82,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2025-07-13
 
 ### Added
+
 - Initial project setup with Next.js, TypeScript, and Tailwind CSS
 - Basic component library (Button, Card, Navbar, etc.)
 - Dashboard page with summary widgets
@@ -134,7 +95,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Version display in the application footer
 
 ### Technical
+
 - Set up project structure following component-based architecture
 - Implemented React Context API for state management
 - Added TypeScript interfaces for all data models
 - Configured Tailwind CSS with custom theme extensions
+
+## [0.6.0] - 2025-07-16
+
+### Highlights
+- 🚀 **Major Inventory & Add Product Workflow Refactor**
+  - Moved Add Category logic from a standalone modal to an inline flow within Add Product, eliminating empty categories and streamlining product creation.
+  - Created a new Add Product page, linked from Inventory, using real categories from product data.
+  - Recovered from file corruption and fully restored Inventory page functionality and UI.
+
+### Added
+- Add Product page with inline Add Category modal.
+- Custom breadcrumbs for Add Product page.
+- Consistent card styling across Events, Sales, Orders, and Inventory pages.
+
+### Changed
+- Navigation and layout: removed bottom navigation, restored VersionFooter, improved SidebarNavigation.
+- Breadcrumbs logic: removed duplicate breadcrumbs, improved navigation clarity.
+- Moved Add Category logic to Add Product flow for better UX.
+
+### Fixed
+- Build errors related to route/page conflicts and "use client" directive placement.
+- Persistent UI and navigation bugs, including blank screens and modal rendering issues.
+- Accessibility, performance, and security improvements.
+
+### Removed
+- Legacy Navbar component.
+- Redundant/duplicate breadcrumbs on Add Product page.
